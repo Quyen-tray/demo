@@ -1,0 +1,26 @@
+version: '3.8'
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sqlserver
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "123456"
+    ports:
+      - "1433:1433"
+    networks:
+      - mynetwork
+
+  java-app:
+    build: .
+    depends_on:
+      - sqlserver
+    ports:
+      - "8080:8080"
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
+
+
